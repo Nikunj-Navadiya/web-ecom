@@ -18,11 +18,26 @@ connectCloudinary()
 
 // Middleware
 app.use(express.json())
-app.use(cors({
-    origin: 'https://forever-frontend-eight-kappa.vercel.app',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true // if you're using cookies or sessions
+
+const allowedOrigins = [
+    'https://forever-admin-bay-xi.vercel.app',
+    'https://forever-frontend-eight-kappa.vercel.app'
+  ];
+  
+  app.use(cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    credentials: true,
   }));
+  
+  // Enable preflight for all routes
+  app.options('*', cors());
 
 // API endPoints
 app.use('/api/user', userRouter)
