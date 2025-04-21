@@ -18,7 +18,11 @@ connectCloudinary()
 
 // Middleware
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: 'https://forever-frontend-eight-kappa.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true // if you're using cookies or sessions
+  }));
 
 // API endPoints
 app.use('/api/user', userRouter)
