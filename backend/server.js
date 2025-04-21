@@ -18,7 +18,10 @@ connectCloudinary()
 
 // Middleware
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: ['https://web-ecom-st2b.vercel.app'], 
+    credentials: true
+}));
 
 // API endPoints
 app.use('/api/user', userRouter)
